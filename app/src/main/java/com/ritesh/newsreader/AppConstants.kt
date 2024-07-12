@@ -12,6 +12,8 @@ object AppConstants {
     const val DEFAULT_QUERY_PAGE_SIZE = 20
 
     const val BASE_URL = "https://newsapi.org/v2/"
+    const val API_KEY = "" //BuildConfig.API_KEY
+    const val DB_NAME = "article_db"
 
     val countryList: List<Country> = listOf(
         Country("United Arab Emirates", "ae"),

@@ -9,7 +9,7 @@ lifecycleRuntimeKtx = "2.8.3"
 activityCompose = "1.9.0"
 composeBom = "2023.08.00"
 
-hiltAndroid = "2.44"
+hiltAndroid = "2.48"
 hiltCommon = "1.1.0"
 
 retrofit2 = "2.10.0"
@@ -17,6 +17,9 @@ retrofitLoggingInterceptor ="4.5.0"
 moshiConverter = "2.9.0"
 moshi = "1.15.0"
 gson = "2.9.1"
+room = "2.5.2"
+kotlinCoroutine = "1.6.4"
+kotlinxMetadataJvm = "0.4.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -51,8 +54,16 @@ hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltA
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroid" }
 hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hiltAndroid" }
+#RoomDB
+room-runtime = {group ="androidx.room", name ="room-runtime", version.ref = "room" }
+room-compiler = {group ="androidx.room", name ="room-compiler", version.ref = "room"}
+room-ktx = {group ="androidx.room", name ="room-ktx", version.ref = "room"}
 
+#Coroutines
+kotlinx-coroutines-core = {group = "org.jetbrains.kotlinx",name ="kotlinx-coroutines-core", version.ref = "kotlinCoroutine"}
+kotlinx-coroutines-android = {group = "org.jetbrains.kotlinx",name ="kotlinx-coroutines-android", version.ref = "kotlinCoroutine"}
 
+kotlinx-metadata-jvm = {group = "org.jetbrains.kotlinx", name="kotlinx-metadata-jvm", version.ref = "kotlinxMetadataJvm"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

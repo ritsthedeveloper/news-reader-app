@@ -2,12 +2,13 @@ package com.ritesh.newsreader.articles.data.model
 
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
+import com.ritesh.newsreader.articles.data.repository.database.entity.Source
 
 @Keep
 data class ApiArticle(
 
-//    @SerializedName("source")
-//    vall source: Source,
+    @SerializedName("source")
+    val source: Source,
 
     @SerializedName("author")
     val author: String?,
