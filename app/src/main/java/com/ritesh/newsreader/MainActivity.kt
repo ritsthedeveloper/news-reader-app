@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.ritesh.newsreader.common.ui.base.NewsNavHost
 import com.ritesh.newsreader.ui.theme.NewsReaderTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,8 +21,12 @@ class MainActivity : ComponentActivity() {
         setContent {
             NewsReaderTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    Greeting("Android")
+//                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+//                    Greeting("Android")
+//                }
+
+                Surface {
+                    NewsNavHost()
                 }
             }
         }

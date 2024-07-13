@@ -78,6 +78,10 @@ class ArticleRepository @Inject constructor(
             )
         }
 
+    suspend fun getNewsFromDb(): List<Article> {
+        return database.getAllArticles().first()
+    }
+
     suspend fun upsert(article: Article) {
         database.upsert(article)
     }
