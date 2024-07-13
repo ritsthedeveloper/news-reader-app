@@ -83,9 +83,10 @@ dependencies {
     //RoomDB
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
-//    kapt(libs.room.compiler)
-    ksp(libs.room.compiler)
-//    annotationProcessor(libs.room.compiler)
+    annotationProcessor(libs.room.compiler)
+    kapt(libs.room.compiler)
+//    ksp(libs.room.compiler)
+//
 
     //Coroutines
     implementation(libs.kotlinx.coroutines.core)
