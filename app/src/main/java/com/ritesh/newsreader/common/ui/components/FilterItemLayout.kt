@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ritesh.newsreader.R
+import com.ritesh.newsreader.articles.data.model.Category
 import com.ritesh.newsreader.articles.data.model.Country
 import com.ritesh.newsreader.articles.data.model.Language
 import com.ritesh.newsreader.articles.data.repository.database.entity.Source
@@ -84,6 +85,29 @@ fun SourceItem(
             contentAlignment = Alignment.Center
         ) {
             Text(text = source.name ?: stringResource(R.string.unknown))
+        }
+    }
+}
+
+@Composable
+fun CategoryItem(
+    category: Category,
+    onItemClick: (Category) -> Unit
+) {
+    Card(modifier = Modifier
+        .fillMaxWidth()
+        .wrapContentHeight()
+        .padding(4.dp)
+        .clickable {
+            onItemClick(category)
+        }) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(text = category.name ?: stringResource(R.string.unknown))
         }
     }
 }

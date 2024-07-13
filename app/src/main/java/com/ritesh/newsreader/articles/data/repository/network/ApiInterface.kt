@@ -1,5 +1,6 @@
 package com.ritesh.newsreader.articles.data.repository.network
 
+import com.ritesh.newsreader.AppConstants.DEFAULT_CATEGORY
 import com.ritesh.newsreader.AppConstants.DEFAULT_COUNTRY
 import com.ritesh.newsreader.AppConstants.DEFAULT_LANGUAGE
 import com.ritesh.newsreader.AppConstants.DEFAULT_PAGE_NUM
@@ -33,6 +34,12 @@ interface ApiInterface {
         @Query("pageSize") pageSize: Int = DEFAULT_QUERY_PAGE_SIZE,
     ): ArticlesResponse
 
+    @GET("top-headlines")
+    suspend fun getNewsByCategory(
+        @Query("category") category: String = DEFAULT_CATEGORY,
+        @Query("page") pageNum: Int = DEFAULT_PAGE_NUM,
+        @Query("pageSize") pageSize: Int = DEFAULT_QUERY_PAGE_SIZE,
+    ): ArticlesResponse
 
     @GET("everything")
     suspend fun searchNews(

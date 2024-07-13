@@ -19,7 +19,7 @@ object NavigationUtil {
         countryId: String,
         navController: NavHostController
     ) {
-        navController.navigate(Route.TopNews.routeWithoutArgs + "/${countryId}/{language}/{source}") {
+        navController.navigate(Route.TopNews.routeWithoutArgs + "/${countryId}/{language}/{source}/{category}") {
             launchSingleTop = true
         }
     }
@@ -28,7 +28,7 @@ object NavigationUtil {
         languageId: String,
         navController: NavHostController
     ) {
-        navController.navigate(Route.TopNews.routeWithoutArgs + "/{country}/${languageId}/{source}") {
+        navController.navigate(Route.TopNews.routeWithoutArgs + "/{country}/${languageId}/{source}/{category}") {
             launchSingleTop = true
         }
     }
@@ -37,7 +37,16 @@ object NavigationUtil {
         sourceId: String,
         navController: NavHostController
     ) {
-        navController.navigate(Route.TopNews.routeWithoutArgs + "/{country}/{language}/${sourceId}") {
+        navController.navigate(Route.TopNews.routeWithoutArgs + "/{country}/{language}/${sourceId}/{category}") {
+            launchSingleTop = true
+        }
+    }
+
+    fun navigateToCategoryScreen(
+        categoryId: String,
+        navController: NavHostController
+    ){
+        navController.navigate(Route.TopNews.routeWithoutArgs + "/{country}/{language}/{source}/${categoryId}") {
             launchSingleTop = true
         }
     }

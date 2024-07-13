@@ -3,6 +3,7 @@ package com.ritesh.newsreader.common.ui.components
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import com.ritesh.newsreader.articles.data.model.Category
 import com.ritesh.newsreader.articles.data.model.Country
 import com.ritesh.newsreader.articles.data.model.Language
 import com.ritesh.newsreader.articles.data.repository.database.entity.Source
@@ -48,3 +49,18 @@ fun SourceListLayout(
         }
     }
 }
+
+@Composable
+fun CategoryListLayout(
+    categoryList: List<Category>,
+    categoryClicked: (Category) -> Unit
+) {
+    LazyColumn {
+        items(categoryList) {
+            CategoryItem(it) { category ->
+                categoryClicked(category)
+            }
+        }
+    }
+}
+

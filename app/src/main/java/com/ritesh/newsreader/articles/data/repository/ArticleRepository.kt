@@ -2,6 +2,7 @@ package com.ritesh.newsreader.articles.data.repository
 
 import com.ritesh.newsreader.AppConstants
 import com.ritesh.newsreader.AppConstants.DEFAULT_PAGE_NUM
+import com.ritesh.newsreader.articles.data.model.Category
 import com.ritesh.newsreader.articles.data.model.Country
 import com.ritesh.newsreader.articles.data.model.Language
 import com.ritesh.newsreader.articles.data.repository.database.DatabaseService
@@ -68,6 +69,18 @@ class ArticleRepository @Inject constructor(
         )
     }
 
+    suspend fun getNewsByCategory(
+        categoryCode: String,
+        pageNumber: Int = DEFAULT_PAGE_NUM
+    ): Flow<List<Article>> = flow {
+        emit(
+            network.getNewsByCategory(
+                categoryCode,
+                pageNum = pageNumber
+            ).articles.apiArticleListToArticleList()
+        )
+    }
+
     suspend fun searchNews(
         searchQuery: String,
         pageNumber: Int = DEFAULT_PAGE_NUM
@@ -102,5 +115,9 @@ class ArticleRepository @Inject constructor(
 
     suspend fun getLanguages(): Flow<List<Language>> = flow {
         emit(AppConstants.languageList)
+    }
+
+    suspend fun getCategories(): Flow<List<Category>> = flow {
+        emit(AppConstants.categoryList)
     }
 }

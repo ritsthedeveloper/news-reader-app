@@ -31,6 +31,7 @@ import com.google.gson.Gson
 import com.ritesh.newsreader.R
 import com.ritesh.newsreader.articles.data.repository.database.entity.Article
 import com.ritesh.newsreader.articles.presentation.screens.ArticleScreen
+import com.ritesh.newsreader.articles.presentation.screens.CategoryScreen
 import com.ritesh.newsreader.articles.presentation.screens.CountryScreen
 import com.ritesh.newsreader.articles.presentation.screens.LanguageScreen
 import com.ritesh.newsreader.articles.presentation.screens.NewsScreen
@@ -43,6 +44,7 @@ import com.ritesh.newsreader.common.ui.navigation.Route
 import com.ritesh.newsreader.common.ui.navigation.bottomBarScreens
 import com.ritesh.newsreader.common.ui.navigation.filterScreens
 import com.ritesh.newsreader.util.NavigationUtil.navigateSingleTopTo
+import com.ritesh.newsreader.util.NavigationUtil.navigateToCategoryScreen
 import com.ritesh.newsreader.util.NavigationUtil.navigateToCountryScreen
 import com.ritesh.newsreader.util.NavigationUtil.navigateToLanguageScreen
 import com.ritesh.newsreader.util.NavigationUtil.navigateToSourceScreen
@@ -122,15 +124,16 @@ private fun NewsNavHost(
             route = Route.TopNews.route,
             arguments = listOf(navArgument("country") { type = NavType.StringType },
                 navArgument("language") { type = NavType.StringType },
-                navArgument("source") { type = NavType.StringType })
+                navArgument("source") { type = NavType.StringType },
+                navArgument("category") { type = NavType.StringType })
         ) {
             val countryCode = it.arguments?.getString("country")
             val languageCode = it.arguments?.getString("language")
             val sourceCode = it.arguments?.getString("source")
+            val categoryCode = it.arguments?.getString("category")
 
-            if (checkIfValidArgNews(countryCode) || checkIfValidArgNews(languageCode) || checkIfValidArgNews(
-                    sourceCode
-                )
+            if (checkIfValidArgNews(countryCode) || checkIfValidArgNews(languageCode)
+                || checkIfValidArgNews(sourceCode) || checkIfValidArgNews(categoryCode)
             ) {
                 NewsScreen { article ->
                     navigateToArticleScreen(article, navController)
@@ -256,6 +259,11 @@ fun FilterNavHost(
         composable(route = FilterRoute.Language.route) {
             LanguageScreen {
                 navigateToLanguageScreen(it.code, parentNavController)
+            }
+        }
+        composable(route = FilterRoute.Category.route) {
+            CategoryScreen {
+                navigateToCategoryScreen(it.code, parentNavController)
             }
         }
         composable(route = FilterRoute.Source.route) {

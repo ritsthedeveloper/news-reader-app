@@ -3,6 +3,7 @@
     <string name="country">Country</string>
     <string name="language">Language</string>
     <string name="source">Source</string>
+    <string name="category">Category</string>
     <string name="search_hint">Search…</string>
     <string name="something_went_wrong">Something went wrong</string>
     <string name="no_internet_available">No internet available</string>

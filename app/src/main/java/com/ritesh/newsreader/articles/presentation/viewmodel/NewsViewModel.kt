@@ -54,6 +54,8 @@ class NewsViewModel @Inject constructor(
             fetchNewsByLanguage(savedStateHandle.get("language"))
         } else if (checkIfValidArgNews(savedStateHandle.get("source") as? String?)) {
             fetchNewsBySource(savedStateHandle.get("source"))
+        } else if (checkIfValidArgNews(savedStateHandle.get("category") as? String?)) {
+            fetchNewsByCategory(savedStateHandle.get("category"))
         } else {
             fetchNewsWithoutFilter()
         }
@@ -124,6 +126,22 @@ class NewsViewModel @Inject constructor(
             }
             _newsItem.emit(UIState.Loading)
             newsRepository.getNewsBySource(sourceId ?: AppConstants.DEFAULT_SOURCE, pageNumber = pageNum)
+                .mapFilterCollectNews()
+        }
+    }
+
+    private fun fetchNewsByCategory(categoryId: String?) {
+        viewModelScope.launch {
+            if (!networkHelper.isNetworkConnected()) {
+                _newsItem.emit(
+                    UIState.Failure(
+                        throwable = NoInternetException()
+                    )
+                )
+                return@launch
+            }
+            _newsItem.emit(UIState.Loading)
+            newsRepository.getNewsByCategory(categoryId ?: AppConstants.DEFAULT_CATEGORY, pageNumber = pageNum)
                 .mapFilterCollectNews()
         }
     }
