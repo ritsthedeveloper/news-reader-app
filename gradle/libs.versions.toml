@@ -20,6 +20,16 @@ gson = "2.9.1"
 room = "2.5.2"
 kotlinCoroutine = "1.6.4"
 kotlinxMetadataJvm = "0.4.2"
+googleAndroidMaterial = "1.9.0"
+
+androidx-compose = "1.5.4"
+androidxComposeMaterial3 = "1.1.2"
+androidx-lifecycle-viewmodel-compose = "2.6.2"
+hiltNavigationCompose = "1.0.0"
+navigationCompose = "2.6.0"
+coilCompose = "2.4.0"
+androidxPagingRuntime = "3.2.1"
+androidxPagingCompose = "3.3.0-alpha02"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -36,6 +46,15 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+google-android-material = {module = "com.google.android.material:material", version.ref = "googleAndroidMaterial"}
+
+#Compose
+androidx-compose-material = { module = "androidx.compose.material:material", version.ref = "androidx-compose" }
+androidx-compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "androidxComposeMaterial3"}
+androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle-viewmodel-compose" }
+androidx-lifecycle-runtime-compose = {module = "androidx.lifecycle:lifecycle-runtime-compose" , version.ref = "androidx-lifecycle-viewmodel-compose" }
+androidx-hilt-navigation-compose = {module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose"}
+androidx-navigation-compose = {module = "androidx.navigation:navigation-compose",version.ref = "navigationCompose"}
 
 #Retrofit
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit2" }
@@ -62,6 +81,14 @@ room-ktx = {group ="androidx.room", name ="room-ktx", version.ref = "room"}
 #Coroutines
 kotlinx-coroutines-core = {group = "org.jetbrains.kotlinx",name ="kotlinx-coroutines-core", version.ref = "kotlinCoroutine"}
 kotlinx-coroutines-android = {group = "org.jetbrains.kotlinx",name ="kotlinx-coroutines-android", version.ref = "kotlinCoroutine"}
+
+# Coil - Image loading
+coil-compose = {module ="io.coil-kt:coil-compose", version.ref="coilCompose"}
+
+# Paging library
+androidx-paging-runtime = {module ="androidx.paging:paging-runtime-ktx", version.ref ="androidxPagingRuntime"}
+androidx-paging-compose = {module ="androidx.paging:paging-compose", version.ref ="androidxPagingCompose"}
+
 
 kotlinx-metadata-jvm = {group = "org.jetbrains.kotlinx", name="kotlinx-metadata-jvm", version.ref = "kotlinxMetadataJvm"}
 

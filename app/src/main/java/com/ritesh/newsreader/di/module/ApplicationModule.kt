@@ -1,13 +1,22 @@
 package com.ritesh.newsreader.di.module
 
 import android.app.Application
+import android.content.Context
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import androidx.room.Room
 import com.ritesh.newsreader.AppConstants
 import com.ritesh.newsreader.articles.data.repository.database.AppDatabaseService
 import com.ritesh.newsreader.articles.data.repository.database.ArticleDatabase
 import com.ritesh.newsreader.articles.data.repository.database.DatabaseService
+import com.ritesh.newsreader.articles.data.repository.database.entity.Article
 import com.ritesh.newsreader.articles.data.repository.network.ApiInterface
 import com.ritesh.newsreader.articles.data.repository.network.ApiKeyInterceptor
+import com.ritesh.newsreader.common.dispatcher.DefaultDispatcherProvider
+import com.ritesh.newsreader.common.dispatcher.DispatcherProvider
+import com.ritesh.newsreader.common.network.NetworkHelper
+import com.ritesh.newsreader.common.network.NetworkHelperImpl
+import com.ritesh.newsreader.common.ui.paging.NewsPagingSource
 import com.ritesh.newsreader.di.ApiKey
 import com.ritesh.newsreader.di.BaseUrl
 import com.ritesh.newsreader.di.DbName
@@ -16,6 +25,7 @@ import com.ritesh.newsreader.logger.Logger
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -45,6 +55,32 @@ class ApplicationModule {
     @Provides
     @Singleton
     fun provideLogger(): Logger = AppLogger
+
+    @Provides
+    @Singleton
+    fun provideDispatcher(): DispatcherProvider = DefaultDispatcherProvider()
+
+    @Provides
+    @Singleton
+    fun provideNetworkHelper(
+        @ApplicationContext context: Context
+    ): NetworkHelper {
+        return NetworkHelperImpl(context)
+    }
+
+    @Provides
+    @Singleton
+    fun providePager(
+        newsPagingSource: NewsPagingSource
+    ): Pager<Int, Article> {
+        return Pager(
+            config = PagingConfig(
+                AppConstants.DEFAULT_QUERY_PAGE_SIZE
+            )
+        ) {
+            newsPagingSource
+        }
+    }
 
     @Singleton
     @Provides

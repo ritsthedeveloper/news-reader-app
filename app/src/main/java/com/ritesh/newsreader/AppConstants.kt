@@ -15,6 +15,8 @@ object AppConstants {
     const val API_KEY = "" //BuildConfig.API_KEY
     const val DB_NAME = "article_db"
 
+    const val SEARCH_NEWS_TIME_DELAY = 500L
+
     val countryList: List<Country> = listOf(
         Country("United Arab Emirates", "ae"),
         Country("Argentina", "ar"),
