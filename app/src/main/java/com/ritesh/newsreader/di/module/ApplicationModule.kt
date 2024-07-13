@@ -38,6 +38,19 @@ class ApplicationModule {
 
     @Singleton
     @Provides
+    fun provideArticleDatabase(
+        application: Application,
+        @DbName dbName: String
+    ): ArticleDatabase {
+        return Room.databaseBuilder(
+            application,
+            ArticleDatabase::class.java,
+            dbName
+        ).build()
+    }
+
+    @Singleton
+    @Provides
     fun provideGsonConverterFactory(): GsonConverterFactory = GsonConverterFactory.create()
 
     @ApiKey
@@ -101,20 +114,6 @@ class ApplicationModule {
             .addConverterFactory(gsonFactory)
             .build()
             .create(ApiInterface::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun provideArticleDatabase(
-        application: Application,
-        @DbName dbName: String
-    ): ArticleDatabase {
-        return Room.databaseBuilder(
-            application,
-            ArticleDatabase::class.java,
-            dbName
-        )
-            .build()
     }
 
     @Provides
