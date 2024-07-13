@@ -22,7 +22,13 @@ class ApiKeyInterceptor @Inject constructor(
         val requestBuilder = originalRequest.newBuilder()
             .header("X-Api-Key", apiKey)
         val request = requestBuilder.build()
-        logger.d("NewsReader", "Request :" + request.url)
-        return chain.proceed(request)
+        logger.d("NewsReader", "Request Header :" + request.headers)
+        logger.d("NewsReader", "Request URL :" + request.url)
+        val response : Response = chain.proceed(request)
+
+        if(response.isSuccessful){
+            logger.d("NewsReader", "Response Body:$response")
+        }
+        return response
     }
 }
