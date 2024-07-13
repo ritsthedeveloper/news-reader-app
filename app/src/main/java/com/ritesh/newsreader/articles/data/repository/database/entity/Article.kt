@@ -14,7 +14,6 @@ import androidx.room.PrimaryKey
         unique = true
     )]
 )
-@Keep
 data class Article(
 
     @PrimaryKey(autoGenerate = true)

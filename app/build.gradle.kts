@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.googleHiltAndroid)
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -81,9 +82,10 @@ dependencies {
 
     //RoomDB
     implementation(libs.room.runtime)
-//    kapt(libs.room.compiler)
-    annotationProcessor(libs.room.compiler)
     implementation(libs.room.ktx)
+//    kapt(libs.room.compiler)
+    ksp(libs.room.compiler)
+//    annotationProcessor(libs.room.compiler)
 
     //Coroutines
     implementation(libs.kotlinx.coroutines.core)

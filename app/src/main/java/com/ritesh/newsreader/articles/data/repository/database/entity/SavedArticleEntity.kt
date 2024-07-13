@@ -14,8 +14,6 @@ import androidx.room.PrimaryKey
         unique = true
     )]
 )
-
-@Keep
 data class SavedArticleEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo("id")
