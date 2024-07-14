@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,11 +27,15 @@ fun Article(article: Article, onItemClick: (Article) -> Unit) {
     Card(modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight()
-        .padding(4.dp)
+        .padding(6.dp)
         .clickable {
             onItemClick(article)
-        }) {
-        Row(modifier = Modifier.height(120.dp)) {
+        },
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer
+        )
+    ) {
+        Row(modifier = Modifier.height(150.dp)) {
             article.urlToImage?.let { ArticleImage(urlToImage = it, title = article.title) }
             Column(
                 modifier = Modifier.fillMaxSize(),
