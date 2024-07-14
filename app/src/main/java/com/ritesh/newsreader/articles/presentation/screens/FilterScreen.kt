@@ -6,9 +6,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ritesh.newsreader.R
+import com.ritesh.newsreader.articles.data.model.Category
 import com.ritesh.newsreader.articles.data.model.Country
 import com.ritesh.newsreader.articles.data.model.Language
 import com.ritesh.newsreader.articles.data.repository.database.entity.Source
+import com.ritesh.newsreader.articles.presentation.viewmodel.CategoryFilterViewModel
 import com.ritesh.newsreader.articles.presentation.viewmodel.CountryFilterViewModel
 import com.ritesh.newsreader.articles.presentation.viewmodel.LanguageFilterViewModel
 import com.ritesh.newsreader.articles.presentation.viewmodel.SourceFilterViewModel
@@ -16,6 +18,7 @@ import com.ritesh.newsreader.common.network.NoInternetException
 import com.ritesh.newsreader.common.ui.base.ShowError
 import com.ritesh.newsreader.common.ui.base.ShowLoading
 import com.ritesh.newsreader.common.ui.base.UIState
+import com.ritesh.newsreader.common.ui.components.CategoryListLayout
 import com.ritesh.newsreader.common.ui.components.CountryListLayout
 import com.ritesh.newsreader.common.ui.components.LanguageListLayout
 import com.ritesh.newsreader.common.ui.components.SourceListLayout
@@ -124,6 +127,44 @@ fun SourceScreen(
         is UIState.Success -> {
             SourceListLayout(sourceList = (sourceUiState as UIState.Success<List<Source>>).data) {
                 sourceClicked(it)
+            }
+        }
+
+        is UIState.Empty -> {
+
+        }
+    }
+
+}
+
+@Composable
+fun CategoryScreen(
+    categoryFilterViewModel: CategoryFilterViewModel = hiltViewModel(),
+    categoryClicked: (Category) -> Unit
+) {
+    val categoryUiState: UIState<List<Category>> by categoryFilterViewModel.categoryItem.collectAsStateWithLifecycle()
+
+    when (categoryUiState) {
+        is UIState.Loading -> {
+            ShowLoading()
+        }
+
+        is UIState.Failure -> {
+            var errorText = stringResource(id = R.string.something_went_wrong)
+            if ((categoryUiState as UIState.Failure<List<Category>>).throwable is NoInternetException) {
+                errorText = stringResource(id = R.string.no_internet_available)
+            }
+            ShowError(
+                text = errorText,
+                retryEnabled = true
+            ) {
+                categoryFilterViewModel.getCategories()
+            }
+        }
+
+        is UIState.Success -> {
+            CategoryListLayout(categoryList = (categoryUiState as UIState.Success<List<Category>>).data) {
+                categoryClicked(it)
             }
         }
 

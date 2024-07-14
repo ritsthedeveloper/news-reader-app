@@ -9,6 +9,7 @@ import android.util.Log
  */
 object AppLogger : Logger  {
 
+    val TAG : String = "NewsReader"
     fun init() {
 //        if (BuildConfig.DEBUG) {
 //            Timber.plant(DebugTree())
@@ -22,6 +23,7 @@ object AppLogger : Logger  {
      */
     fun logDebug(tag: String, message: String, vararg args: Any?) {
 //        Timber.tag(tag).d(message, *args)
+        Log.d(TAG,message)
     }
 
     /**
@@ -30,6 +32,7 @@ object AppLogger : Logger  {
      */
     fun logInfo(tag: String, message: String, vararg args: Any?) {
 //        Timber.tag(tag).i(message, *args)
+        Log.i(TAG,message)
     }
 
     /**

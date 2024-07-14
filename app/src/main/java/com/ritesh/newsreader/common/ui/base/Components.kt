@@ -40,13 +40,13 @@ fun ShowLoading(
             .fillMaxHeight()
     ) {
         val contentDesc = stringResource(R.string.loading)
-        CircularProgressIndicator(
-            modifier = modifier
-                .align(Alignment.Center)
-                .semantics {
-                    contentDescription = contentDesc
-                }
-        )
+//        CircularProgressIndicator(
+//            modifier = modifier
+//                .align(Alignment.Center)
+//                .semantics {
+//                    contentDescription = contentDesc
+//                }
+//        )
     }
 }
 

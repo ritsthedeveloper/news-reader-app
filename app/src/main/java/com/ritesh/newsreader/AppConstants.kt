@@ -1,5 +1,6 @@
 package com.ritesh.newsreader
 
+import com.ritesh.newsreader.articles.data.model.Category
 import com.ritesh.newsreader.articles.data.model.Country
 import com.ritesh.newsreader.articles.data.model.Language
 
@@ -9,6 +10,7 @@ object AppConstants {
     const val DEFAULT_COUNTRY = "in"
     const val DEFAULT_LANGUAGE = "en"
     const val DEFAULT_SOURCE = "abc-news"
+    const val DEFAULT_CATEGORY = "business"
     const val DEFAULT_QUERY_PAGE_SIZE = 20
 
     const val BASE_URL = "https://newsapi.org/v2/"
@@ -86,5 +88,15 @@ object AppConstants {
         Language("Russian", "ru"),
         Language("Swedish", "sv"),
         Language("Chinese", "zh")
+    )
+
+    val categoryList = listOf(
+        Category("Business","business"),
+        Category("Entertainment","entertainment"),
+        Category("General","general"),
+        Category("Health","health"),
+        Category("Science","science"),
+        Category("Sports","sports"),
+        Category("Technology","technology"),
     )
 }

@@ -11,8 +11,7 @@ sealed class Route(
     val routeWithoutArgs: String = route
 ) {
     object TopNews :
-        Route("topNews/{country}/{language}/{source}", R.string.news, R.drawable.ic_news, "topNews")
-
+        Route("topNews/{country}/{language}/{source}/{category}", R.string.news, R.drawable.ic_news, "topNews")
     object FilterNews : Route("filterNews", R.string.filter, R.drawable.ic_filter)
     object SavedNews : Route("savedNews", R.string.saved, R.drawable.ic_save)
     object SearchNews : Route("searchNews", R.string.search, R.drawable.ic_search)
@@ -28,6 +27,7 @@ sealed class FilterRoute(
     object Country : FilterRoute("countryFilter", R.string.country, R.drawable.ic_country)
     object Language : FilterRoute("languageFilter", R.string.language, R.drawable.ic_language)
     object Source : FilterRoute("sourceFilter", R.string.source, R.drawable.ic_source)
+    object Category : FilterRoute("categoryFilter", R.string.category, R.drawable.ic_language)
 }
 
 val bottomBarScreens = listOf(
@@ -40,5 +40,6 @@ val bottomBarScreens = listOf(
 val filterScreens = listOf(
     FilterRoute.Country,
     FilterRoute.Language,
-    FilterRoute.Source
+    FilterRoute.Source,
+    FilterRoute.Category
 )
