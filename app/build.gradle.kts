@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
@@ -10,6 +12,18 @@ android {
     namespace = "com.ritesh.newsreader"
     compileSdk = 34
 
+    signingConfigs {
+        /** This release config contains key required to sign the apk. When we rollout app in apk format,
+        we will need to sign it using this key. */
+        create("release_config") {}
+        /** This app bundle release config contains key required to sign the app bundle. When we rollout app in app
+         * bundle format, we will need to sign it using this key while uploading to play store, then play store will use
+         * release_config key to sign the apk generated from app bundle. */
+        create("app_bundle_release_config") {}
+
+        create("debug_config") {}
+    }
+
     defaultConfig {
         applicationId = "com.ritesh.newsreader"
         minSdk = 24
@@ -21,14 +35,28 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        //load the values from .properties file
+        val keystoreFile = project.rootProject.file("apikey.properties")
+        val properties = Properties()
+        properties.load(keystoreFile.inputStream())
+
+        //return empty key in case something goes wrong
+        val apiKey = properties.getProperty("NEWS_API_KEY") ?: ""
+
+        buildConfigField(
+            type = "String",
+            name = "API_KEY",
+            value = apiKey
+        )
     }
 
     buildTypes {
-//        debug {
-////            buildConfigField("String", "API_KEY", "\"<Add your API Key>\"")
-//            //FIXME remove the string and add your api key
-//            buildConfigField("String", "API_KEY", "\"42195f0f50cf4551abeb841497b2fee1\"")
-//        }
+        debug {
+            /**TODO: remove the string and add your api key( Not required anymore as it has been now added to
+             * .properties file */
+//            buildConfigField("String", "API_KEY", "\"<Add your API Key>\"")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -55,6 +83,29 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+
+    /* Configuration for Android App bundle -
+    the bundle block is used to control which types of configuration APKs
+    you want your app bundle to support.*/
+    bundle {
+        language {
+            // Specifies that the app bundle should not support
+            // configuration APKs for language resources. These
+            // resources are instead packaged with each base and
+            // dynamic feature APK.
+            enableSplit = false
+        }
+        density {
+            // This property is set to true by default.
+            // Different APKs are generated for devices with different screen densities.
+            enableSplit = true
+        }
+        abi {
+            // This property is set to true by default.
+            // Different APKs are generated for devices with different CPU architectures.
+            enableSplit = true
         }
     }
 }
