@@ -94,11 +94,11 @@ fun NewsScreen(
 
             }
         }
-        PullRefreshIndicator(
-            refreshing = isRefreshing,
-            state = pullRefreshState,
-            modifier = Modifier.align(Alignment.TopCenter)
-        )
+//        PullRefreshIndicator(
+//            refreshing = isRefreshing,
+//            state = pullRefreshState,
+//            modifier = Modifier.align(Alignment.TopCenter)
+//        )
     }
 }
 
@@ -149,11 +149,11 @@ fun NewsScreenPaging(
                 NewsPagingAppend(pagingResponse, newsClicked)
             }
         }
-        PullRefreshIndicator(
-            refreshing = isRefreshing,
-            state = pullRefreshState,
-            modifier = Modifier.align(Alignment.TopCenter)
-        )
+//        PullRefreshIndicator(
+//            refreshing = isRefreshing,
+//            state = pullRefreshState,
+//            modifier = Modifier.align(Alignment.TopCenter)
+//        )
     }
 }
 

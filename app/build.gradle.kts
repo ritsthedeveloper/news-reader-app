@@ -165,6 +165,9 @@ dependencies {
     // Paging - Jetpack Compose integration
     implementation(libs.androidx.paging.compose)
 
+    // Timber- Logger
+    implementation(libs.logger.timber)
+
     // Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

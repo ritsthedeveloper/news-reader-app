@@ -1,6 +1,8 @@
 package com.ritesh.newsreader.logger
 
 import android.util.Log
+import com.ritesh.newsreader.BuildConfig
+import timber.log.Timber
 
 
 /**
@@ -11,11 +13,11 @@ object AppLogger : Logger  {
 
     val TAG : String = "NewsReader"
     fun init() {
-//        if (BuildConfig.DEBUG) {
-//            Timber.plant(DebugTree())
-//        } else {
-//            Timber.plant(ReleaseTree())
-//        }
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        } else {
+            Timber.plant(ReleaseTree())
+        }
     }
 
     /**
@@ -64,5 +66,6 @@ object AppLogger : Logger  {
 
     override fun d(tag: String, msg: String) {
         Log.d(tag, msg)
+//        logDebug(tag,msg)
     }
 }
