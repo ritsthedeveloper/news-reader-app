@@ -11,7 +11,7 @@ data class ArticlesResponse(
     @SerializedName("status")
     val status: String,
     @SerializedName("totalResults")
-    val results: Int,
+    val totalResults: Int,
     @SerializedName("articles")
     val articles: List<ApiArticle>
 )

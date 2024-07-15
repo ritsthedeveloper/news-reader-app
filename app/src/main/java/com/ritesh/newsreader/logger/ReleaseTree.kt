@@ -1,15 +1,16 @@
 package com.ritesh.newsreader.logger
 
 import android.util.Log
+import timber.log.Timber
 
-class ReleaseTree /*: Timber.Tree()*/ {
+class ReleaseTree : Timber.Tree() {
 
-    /*override*/ fun isLoggable(tag: String?, priority: Int): Boolean {
+    override fun isLoggable(tag: String?, priority: Int): Boolean {
         // Don't log VERBOSE, DEBUG
         return !(priority == Log.VERBOSE || priority == Log.DEBUG)
     }
 
-    /*override*/ fun log(priority: Int, tag: String?, message: String, throwable: Throwable?) {
+    override fun log(priority: Int, tag: String?, message: String, throwable: Throwable?) {
 
         if (!isLoggable(tag, priority)) return
 
