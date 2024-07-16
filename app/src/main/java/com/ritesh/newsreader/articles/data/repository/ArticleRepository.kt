@@ -90,7 +90,9 @@ class ArticleRepository @Inject constructor(
     ): Flow<List<Article>> =
         flow {
             emit(
-                network.searchNews(searchQuery, pageNumber).articles.apiArticleListToArticleList()
+                network
+                    .searchNews(searchQuery, pageNumber)
+                    .articles.apiArticleListToArticleList()
             )
         }
 
