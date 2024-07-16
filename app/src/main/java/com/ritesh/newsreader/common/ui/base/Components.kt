@@ -30,6 +30,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.ritesh.newsreader.R
 
+/**
+ * This common composable is used to display the Loader to the User , with
+ * Loading text and Circular progress Indicator.
+ */
 @Composable
 fun ShowLoading(
     modifier: Modifier = Modifier
@@ -50,6 +54,10 @@ fun ShowLoading(
     }
 }
 
+/**
+ * This common composable is used to display the Error view to the User with
+ * configurable error text message and retry option.
+ */
 @Composable
 fun ShowError(
     modifier: Modifier = Modifier,
@@ -63,6 +71,7 @@ fun ShowError(
         verticalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // Error Icon
         Icon(
             painter = painterResource(id = R.drawable.ic_error),
             contentDescription = null,
@@ -70,6 +79,7 @@ fun ShowError(
                 .width(120.dp)
                 .height(120.dp)
         )
+        // Error text message
         Text(
             text = text,
             style = MaterialTheme.typography.titleMedium,
@@ -77,6 +87,7 @@ fun ShowError(
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
+        // Retry option
         if (retryEnabled) {
             Button(onClick = { retryClicked() }, shape = RoundedCornerShape(10.dp)) {
                 Text(text = stringResource(R.string.retry))

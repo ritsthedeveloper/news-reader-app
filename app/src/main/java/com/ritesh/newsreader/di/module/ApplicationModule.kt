@@ -86,6 +86,11 @@ class ApplicationModule {
     fun providePager(
         newsPagingSource: NewsPagingSource
     ): Pager<Int, Article> {
+        /**
+         * When you create a Pager instance to set up your reactive stream, we must provide
+         * the instance with a PagingConfig configuration object and a function that tells
+         * Pager how to get an instance of your PagingSource implementation:
+         */
         return Pager(
             config = PagingConfig(
                 AppConstants.DEFAULT_QUERY_PAGE_SIZE

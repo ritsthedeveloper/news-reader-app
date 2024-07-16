@@ -31,15 +31,18 @@ class NewsViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val newsRepository: ArticleRepository,
     private val pager: Pager<Int, Article>,
-    private val logger: Logger,
+    val logger: Logger,
     private val dispatcherProvider: DispatcherProvider,
     private val networkHelper: NetworkHelper,
 ) : ViewModel() {
 
     private var pageNum = AppConstants.DEFAULT_PAGE_NUM
+
     private val _newsItem = MutableStateFlow<UIState<List<Article>>>(UIState.Empty)
     val newsItem: StateFlow<UIState<List<Article>>> = _newsItem
 
+    // PagingData is the component that connects the ViewModel layer to the UI.
+    // It queries a PagingSource object and stores the result.
     private val _newsItemPaging = MutableStateFlow<PagingData<Article>>(PagingData.empty())
     val newsItemPaging: StateFlow<PagingData<Article>> = _newsItemPaging
 
@@ -48,45 +51,66 @@ class NewsViewModel @Inject constructor(
     }
 
     fun fetchNews() {
-        if (checkIfValidArgNews(savedStateHandle.get("country") as? String?)) {
-            fetchNewsByCountry(savedStateHandle.get("country"))
-        } else if (checkIfValidArgNews(savedStateHandle.get("language") as? String?)) {
-            fetchNewsByLanguage(savedStateHandle.get("language"))
-        } else if (checkIfValidArgNews(savedStateHandle.get("source") as? String?)) {
-            fetchNewsBySource(savedStateHandle.get("source"))
-        } else if (checkIfValidArgNews(savedStateHandle.get("category") as? String?)) {
-            fetchNewsByCategory(savedStateHandle.get("category"))
-        } else {
-            fetchNewsWithoutFilter()
+        logger.d("NewsViewModel", "Inside fetchNews")
+        when {
+            checkIfValidArgNews(savedStateHandle["country"]) -> {
+                fetchNewsByCountry(savedStateHandle["country"])
+            }
+
+            checkIfValidArgNews(savedStateHandle["language"]) -> {
+                fetchNewsByLanguage(savedStateHandle["language"])
+            }
+
+            checkIfValidArgNews(savedStateHandle["source"]) -> {
+                fetchNewsBySource(savedStateHandle["source"])
+            }
+
+            checkIfValidArgNews(savedStateHandle["category"]) -> {
+                fetchNewsByCategory(savedStateHandle["category"])
+            }
+
+            else -> {
+                fetchNewsWithoutFilter()
+            }
         }
     }
 
+    /**
+     * As we need a stream of paged data from the PagingSource implementation. We are setting up the data stream in
+     * our ViewModel(flow in this case). The Pager class provides methods that expose a reactive stream of PagingData
+     * objects from a PagingSource.
+     */
     private fun fetchNewsWithoutFilter() {
+        logger.d("NewsViewModel", "Inside fetchNewsWithoutFilter")
+        // ViewModel scope is a managed scope and hence it avoids the leaks
         viewModelScope.launch {
-            pager.flow.cachedIn(viewModelScope)
+            pager.flow
+                // Map the outer stream so that the transformations are applied to
+                // each new generation of PagingData.
                 .map {
+                    // Returns a PagingData containing only elements matching the given predicate.
+                    // The predicate in this case is non-empty title and thumbnailUrl of the news-article item
                     it.filter { article ->
                         article.title?.isNotEmpty() == true &&
                                 article.urlToImage?.isNotEmpty() == true
                     }
                 }
+                // cachedIn operator makes the data stream shareable and caches the loaded data with ViewModelScope
+                .cachedIn(viewModelScope)
                 .collect {
-                    _newsItemPaging.value = it
+                    _newsItemPaging.value = it // Collect the transformed values (State).
                 }
         }
     }
 
+    /**
+     * Fetch the news articles as per the country selected by user.
+     */
     private fun fetchNewsByCountry(countryId: String?) {
+        logger.d("NewsViewModel", "Inside fetchNewsByCountry")
         viewModelScope.launch {
-            if (!networkHelper.isNetworkConnected()) {
-                _newsItem.emit(
-                    UIState.Failure(
-                        throwable = NoInternetException()
-                    )
-                )
-                return@launch
-            }
-            _newsItem.emit(UIState.Loading)
+            setupBeforeRequest()
+            // Make the request
             newsRepository.getNewsByCountry(
                 countryId ?: AppConstants.DEFAULT_COUNTRY,
                 pageNumber = pageNum
@@ -95,17 +119,13 @@ class NewsViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Fetch the news articles as per the language selected by user.
+     */
     private fun fetchNewsByLanguage(languageId: String?) {
+        logger.d("NewsViewModel", "Inside fetchNewsByLanguage")
         viewModelScope.launch {
-            if (!networkHelper.isNetworkConnected()) {
-                _newsItem.emit(
-                    UIState.Failure(
-                        throwable = NoInternetException()
-                    )
-                )
-                return@launch
-            }
-            _newsItem.emit(UIState.Loading)
+            setupBeforeRequest()
             newsRepository.getNewsByLanguage(
                 languageId ?: AppConstants.DEFAULT_LANGUAGE,
                 pageNumber = pageNum
@@ -115,35 +135,40 @@ class NewsViewModel @Inject constructor(
     }
 
     private fun fetchNewsBySource(sourceId: String?) {
+        logger.d("NewsViewModel", "Inside fetchNewsBySource")
         viewModelScope.launch {
-            if (!networkHelper.isNetworkConnected()) {
-                _newsItem.emit(
-                    UIState.Failure(
-                        throwable = NoInternetException()
-                    )
-                )
-                return@launch
-            }
-            _newsItem.emit(UIState.Loading)
-            newsRepository.getNewsBySource(sourceId ?: AppConstants.DEFAULT_SOURCE, pageNumber = pageNum)
+            setupBeforeRequest()
+            newsRepository.getNewsBySource(
+                sourceId ?: AppConstants.DEFAULT_SOURCE, pageNumber = pageNum
+            )
                 .mapFilterCollectNews()
         }
     }
 
     private fun fetchNewsByCategory(categoryId: String?) {
+        logger.d("NewsViewModel", "Inside fetchNewsByCategory")
         viewModelScope.launch {
-            if (!networkHelper.isNetworkConnected()) {
-                _newsItem.emit(
-                    UIState.Failure(
-                        throwable = NoInternetException()
-                    )
-                )
-                return@launch
-            }
-            _newsItem.emit(UIState.Loading)
-            newsRepository.getNewsByCategory(categoryId ?: AppConstants.DEFAULT_CATEGORY, pageNumber = pageNum)
+            setupBeforeRequest()
+            newsRepository.getNewsByCategory(
+                categoryId ?: AppConstants.DEFAULT_CATEGORY, pageNumber = pageNum
+            )
                 .mapFilterCollectNews()
         }
+    }
+
+    private suspend fun setupBeforeRequest() {
+        logger.d("NewsViewModel", "Inside setupBeforeRequest")
+        // Check for network availability
+        if (!networkHelper.isNetworkConnected()) {
+            _newsItem.emit(
+                UIState.Failure(
+                    throwable = NoInternetException()
+                )
+            )
+            return
+        }
+        // Update the UI with loading indicator
+        _newsItem.emit(UIState.Loading)
     }
 
     private suspend fun Flow<List<Article>>.mapFilterCollectNews() {

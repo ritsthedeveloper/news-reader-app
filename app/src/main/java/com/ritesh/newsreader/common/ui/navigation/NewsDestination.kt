@@ -30,6 +30,7 @@ sealed class FilterRoute(
     object Category : FilterRoute("categoryFilter", R.string.category, R.drawable.ic_language)
 }
 
+// Items to be displayed in the Bottom Bar
 val bottomBarScreens = listOf(
     Route.TopNews,
     Route.FilterNews,
@@ -37,6 +38,7 @@ val bottomBarScreens = listOf(
     Route.SearchNews
 )
 
+// List of the filters
 val filterScreens = listOf(
     FilterRoute.Country,
     FilterRoute.Language,

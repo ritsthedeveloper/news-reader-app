@@ -33,6 +33,9 @@ class ArticleRepository @Inject constructor(
         }
     }
 
+    /**
+     * Fetch the news articles as per the country selected by user.
+     */
     suspend fun getNewsByCountry(
         countryCode: String,
         pageNumber: Int = DEFAULT_PAGE_NUM

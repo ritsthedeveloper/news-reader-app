@@ -25,29 +25,39 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.ritesh.newsreader.R
-import com.ritesh.newsreader.common.ui.components.Article
 import com.ritesh.newsreader.articles.data.repository.database.entity.Article
 import com.ritesh.newsreader.articles.presentation.viewmodel.NewsViewModel
 import com.ritesh.newsreader.common.network.NoInternetException
 import com.ritesh.newsreader.common.ui.base.ShowError
 import com.ritesh.newsreader.common.ui.base.ShowLoading
 import com.ritesh.newsreader.common.ui.base.UIState
+import com.ritesh.newsreader.common.ui.components.Article
 import com.ritesh.newsreader.common.ui.components.NewsLayout
 import com.ritesh.newsreader.util.filterArticles
 
+/**
+ * Screen to display News-list
+ */
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun NewsScreen(
     newsViewModel: NewsViewModel = hiltViewModel(),
     newsClicked: (Article) -> Unit
 ) {
+    newsViewModel.logger.d("NewsScreen", "Inside NewsScreen")
+
     val newsUiState: UIState<List<Article>> by newsViewModel.newsItem.collectAsStateWithLifecycle()
 
+    // Refreshing state will automatically be saved and restored during configuration changes,
+    // ensuring that the UI retains its state.
     var isRefreshing by rememberSaveable { mutableStateOf(false) }
+    // Helps remembering the PullRefresh State across recompositions.
     val pullRefreshState = rememberPullRefreshState(
         refreshing = isRefreshing,
         onRefresh = {
+            // set the refreshing status true on triggering the refresh request
             isRefreshing = true
+            // start fetching the news making new request.
             newsViewModel.fetchNews()
         }
     )
@@ -60,7 +70,7 @@ fun NewsScreen(
         when (newsUiState) {
             is UIState.Loading -> {
                 if (!isRefreshing)
-                    ShowLoading()
+                    ShowLoading() // Display loader while loading the content first time and not during refresh request
             }
 
             is UIState.Failure -> {
@@ -69,10 +79,12 @@ fun NewsScreen(
                 if ((newsUiState as UIState.Failure<List<Article>>).throwable is NoInternetException) {
                     errorText = stringResource(id = R.string.no_internet_available)
                 }
+                // Display Error view with retry option enabled for better UX.
                 ShowError(
                     text = errorText,
                     retryEnabled = true
                 ) {
+                    // Request for Fetching the news again on clicking the retry button.
                     newsViewModel.fetchNews()
                 }
             }
@@ -82,6 +94,7 @@ fun NewsScreen(
                 if ((newsUiState as UIState.Success<List<Article>>).data.filterArticles()
                         .isEmpty()
                 ) {
+                    // Show no data available error if list fetched is empty.
                     ShowError(text = stringResource(R.string.no_data_available))
                 } else {
                     NewsLayout(newsList = (newsUiState as UIState.Success<List<Article>>).data.filterArticles()) {
@@ -94,11 +107,13 @@ fun NewsScreen(
 
             }
         }
-//        PullRefreshIndicator(
-//            refreshing = isRefreshing,
-//            state = pullRefreshState,
-//            modifier = Modifier.align(Alignment.TopCenter)
-//        )
+
+        // Pull to refresh composable providing the Pull to refresh behavior.
+        PullRefreshIndicator(
+            refreshing = false /*isRefreshing*/,
+            state = pullRefreshState,
+            modifier = Modifier.align(Alignment.TopCenter)
+        )
     }
 }
 
@@ -108,6 +123,9 @@ fun NewsScreenPaging(
     newsViewModel: NewsViewModel = hiltViewModel(),
     newsClicked: (Article) -> Unit
 ) {
+    newsViewModel.logger.d("NewsScreen", "Inside NewsScreenPaging")
+    // This extension helps in collecting values from this Flow of PagingData and represents them inside a
+    // LazyPagingItems instance.
     val pagingResponse = newsViewModel.newsItemPaging.collectAsLazyPagingItems()
 
     var isRefreshing by rememberSaveable { mutableStateOf(false) }
@@ -149,11 +167,12 @@ fun NewsScreenPaging(
                 NewsPagingAppend(pagingResponse, newsClicked)
             }
         }
-//        PullRefreshIndicator(
-//            refreshing = isRefreshing,
-//            state = pullRefreshState,
-//            modifier = Modifier.align(Alignment.TopCenter)
-//        )
+
+        PullRefreshIndicator(
+            refreshing = false /*isRefreshing*/,
+            state = pullRefreshState,
+            modifier = Modifier.align(Alignment.TopCenter)
+        )
     }
 }
 
