@@ -276,6 +276,7 @@ class NewsViewModelTest {
     }
 
     private fun getViewModelInstance(savedStateHandle : SavedStateHandle) : NewsViewModel{
+        // SUT
         return NewsViewModel(
             savedStateHandle,
             articleRepository,
