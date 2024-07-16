@@ -180,6 +180,7 @@ dependencies {
     testImplementation(libs.mockito.core)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.androidx.arch.core.testing)
+    testImplementation(libs.app.cash.turbine)
 
     //Not a processor, but forces Dagger to use newer metadata lib
 //    kapt(libs.kotlinx.metadata.jvm)
