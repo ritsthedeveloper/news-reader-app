@@ -4,14 +4,16 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.ritesh.newsreader.common.ui.navigation.NewsReaderContainer
 import com.ritesh.newsreader.ui.theme.NewsReaderTheme
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * @AndroidEntryPoint generates an individual Hilt component for each Android class in your project.
+ * These components can receive dependencies from their respective parent classes.
+ */
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,7 +22,7 @@ class MainActivity : ComponentActivity() {
             NewsReaderTheme {
                 // A surface container using the 'background' color from the theme
 //                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-//                    Greeting("Android")
+//                    NewsReaderContainer()
 //                }
 
                 Surface {
@@ -31,18 +33,11 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun NewsReaderPreview() {
     NewsReaderTheme {
-        Greeting("Android")
+        NewsReaderContainer()
     }
 }

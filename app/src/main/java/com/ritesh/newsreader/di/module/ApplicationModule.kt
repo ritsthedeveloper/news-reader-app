@@ -32,6 +32,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
+/**
+ * This module class defines all the methods that provides the dependencies required by the app.
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 class ApplicationModule {
