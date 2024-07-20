@@ -2,6 +2,7 @@ package com.ritesh.newsreader.articles.data.repository.database.entity
 
 import androidx.annotation.Keep
 import androidx.room.ColumnInfo
+import com.ritesh.newsreader.articles.data.model.NewsFilter
 
 @Keep
 data class Source(
@@ -10,4 +11,4 @@ data class Source(
 
     @ColumnInfo("sourceName")
     val name: String?
-)
+) : NewsFilter

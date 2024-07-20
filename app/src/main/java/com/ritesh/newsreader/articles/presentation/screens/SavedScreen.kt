@@ -9,8 +9,11 @@ import com.ritesh.newsreader.R
 import com.ritesh.newsreader.articles.data.repository.database.entity.Article
 import com.ritesh.newsreader.articles.presentation.viewmodel.SharedViewModel
 import com.ritesh.newsreader.common.ui.base.ShowError
-import com.ritesh.newsreader.common.ui.components.NewsLayoutWithDelete
+import com.ritesh.newsreader.articles.presentation.components.NewsLayoutWithDelete
 
+/**
+ * Screen to display list of saved/bookmarked news-article.
+ */
 @Composable
 fun SavedScreen(
     sharedViewModel: SharedViewModel = hiltViewModel(),
@@ -25,6 +28,7 @@ fun SavedScreen(
     } else {
         NewsLayoutWithDelete(newsList = newsList,
             articleClicked = {
+                // on clicking any saved article, navigate user to article detail screen
                 newsClicked(it)
             }) {
             sharedViewModel.deleteArticle(it)

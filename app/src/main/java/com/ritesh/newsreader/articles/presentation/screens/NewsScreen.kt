@@ -9,7 +9,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,8 +30,8 @@ import com.ritesh.newsreader.common.network.NoInternetException
 import com.ritesh.newsreader.common.ui.base.ShowError
 import com.ritesh.newsreader.common.ui.base.ShowLoading
 import com.ritesh.newsreader.common.ui.base.UIState
-import com.ritesh.newsreader.common.ui.components.Article
-import com.ritesh.newsreader.common.ui.components.NewsLayout
+import com.ritesh.newsreader.articles.presentation.components.NewsArticleItem
+import com.ritesh.newsreader.articles.presentation.components.NewsLayout
 import com.ritesh.newsreader.util.filterArticles
 
 /**
@@ -184,7 +183,7 @@ private fun NewsPagingAppend(
     LazyColumn {
         items(pagingResponse.itemCount) {
             if (pagingResponse[it] != null) {
-                Article(pagingResponse[it]!!) { article ->
+                NewsArticleItem(pagingResponse[it]!!) { article ->
                     newsClicked(article)
                 }
             }
