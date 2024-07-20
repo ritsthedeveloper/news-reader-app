@@ -18,3 +18,4 @@ local.properties
 /.idea/
 apikey.properties
 /apikey.properties
+.idea
