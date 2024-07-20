@@ -199,10 +199,10 @@ private fun NewsPagingAppend(
                                 .padding(8.dp),
                             contentAlignment = Alignment.Center
                         ) {
-                            CircularProgressIndicator(
-                                modifier = Modifier.align(Alignment.Center),
-                                strokeWidth = 1.dp
-                            )
+//                            CircularProgressIndicator(
+//                                modifier = Modifier.align(Alignment.Center),
+//                                strokeWidth = 1.dp
+//                            )
                         }
                     }
                 }

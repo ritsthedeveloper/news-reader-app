@@ -26,6 +26,9 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ *
+ */
 @HiltViewModel
 class NewsViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,

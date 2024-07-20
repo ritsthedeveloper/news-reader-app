@@ -15,6 +15,7 @@ import com.ritesh.newsreader.logger.Logger
 import com.ritesh.newsreader.logger.TestLogger
 import org.junit.Assert.assertEquals
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.resetMain
@@ -68,10 +69,8 @@ class NewsViewModelTest {
                 .getNewsByCountry(AppConstants.DEFAULT_COUNTRY)
         }
     }
-
     @Test
     fun fetchNewsByCountry_whenRepositoryResponseError_shouldSetErrorUiState() {
-
         runTest {
             val errorMessage = "Error Message"
             val exception = IllegalStateException(errorMessage)
@@ -97,10 +96,8 @@ class NewsViewModelTest {
                 .getNewsByCountry(AppConstants.DEFAULT_COUNTRY)
         }
     }
-
     @Test
     fun fetchNewsByCategory_whenRepositoryResponseSuccess_shouldSetSuccessUiState() {
-
         runTest {
             Mockito
                 .doReturn(flowOf(emptyList<Article>()))
@@ -119,10 +116,8 @@ class NewsViewModelTest {
                 .getNewsByCategory(AppConstants.DEFAULT_CATEGORY)
         }
     }
-
     @Test
     fun fetchNewsByCategory_whenRepositoryResponseError_shouldSetErrorUiState() {
-
         runTest {
             val errorMessage = "Error Message"
             val exception = IllegalStateException(errorMessage)
@@ -148,7 +143,6 @@ class NewsViewModelTest {
                 .getNewsByCategory(AppConstants.DEFAULT_CATEGORY)
         }
     }
-
     @Test
     fun fetchNewsByLanguage_whenRepositoryResponseSuccess_shouldSetSuccessUiState() {
         runTest {
@@ -169,7 +163,6 @@ class NewsViewModelTest {
                 .getNewsByLanguage(AppConstants.DEFAULT_LANGUAGE)
         }
     }
-
     @Test
     fun fetchNewsByLanguage_whenRepositoryResponseError_shouldSetErrorUiState(){
         runTest {
@@ -197,10 +190,8 @@ class NewsViewModelTest {
                 .getNewsByLanguage(AppConstants.DEFAULT_LANGUAGE)
         }
     }
-
     @Test
     fun fetchNewsBySource_whenRepositoryResponseSuccess_shouldSetSuccessUiState() {
-
         runTest {
             Mockito
                 .doReturn(flowOf(emptyList<Article>()))
@@ -247,6 +238,7 @@ class NewsViewModelTest {
         }
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @After
     fun tearDown() {
         Dispatchers.resetMain()
