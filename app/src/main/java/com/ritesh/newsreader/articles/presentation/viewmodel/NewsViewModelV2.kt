@@ -36,6 +36,7 @@ class NewsViewModelV2 @Inject constructor(
     val logger: Logger
 ) : ViewModel() {
 
+    private val _tag : String = "NewsViewModelV2"
     private val _newsItem = MutableStateFlow<UIState<List<Article>>>(UIState.Empty)
     val newsItem: StateFlow<UIState<List<Article>>> = _newsItem
 
@@ -49,7 +50,7 @@ class NewsViewModelV2 @Inject constructor(
     }
 
     fun fetchNews() {
-        logger.d("NewsViewModel", "Inside fetchNews")
+        logger.logDebug(_tag, "Inside fetchNews")
         when {
             ValidationUtil.checkIfValidArgNews(savedStateHandle["country"]) -> {
                 fetchNewsByCountry(savedStateHandle["country"])
@@ -79,7 +80,7 @@ class NewsViewModelV2 @Inject constructor(
      * objects from a PagingSource.
      */
     private fun fetchNewsWithoutFilter() {
-        logger.d("NewsViewModel", "Inside fetchNewsWithoutFilter")
+        logger.logDebug(_tag, "Inside fetchNewsWithoutFilter")
         // ViewModel scope is a managed scope and hence it avoids the leaks
         viewModelScope.launch {
             pager.flow
@@ -105,7 +106,7 @@ class NewsViewModelV2 @Inject constructor(
      * Fetch the news articles as per the country selected by user.
      */
     private fun fetchNewsByCountry(countryId: String?) {
-        logger.d("NewsViewModel", "Inside fetchNewsByCountry")
+        logger.logDebug(_tag, "Inside fetchNewsByCountry")
         viewModelScope.launch {
             setupBeforeRequest()
             // Make the request
@@ -119,7 +120,7 @@ class NewsViewModelV2 @Inject constructor(
      * Fetch the news articles as per the language selected by user.
      */
     private fun fetchNewsByLanguage(languageId: String?) {
-        logger.d("NewsViewModel", "Inside fetchNewsByLanguage")
+        logger.logDebug(_tag, "Inside fetchNewsByLanguage")
         viewModelScope.launch {
             setupBeforeRequest()
             // Make the request
@@ -130,7 +131,7 @@ class NewsViewModelV2 @Inject constructor(
     }
 
     private fun fetchNewsBySource(sourceId: String?) {
-        logger.d("NewsViewModel", "Inside fetchNewsBySource")
+        logger.logDebug(_tag, "Inside fetchNewsBySource")
         viewModelScope.launch {
             setupBeforeRequest()
             articlesUseCase
@@ -140,7 +141,7 @@ class NewsViewModelV2 @Inject constructor(
     }
 
     private fun fetchNewsByCategory(categoryId: String?) {
-        logger.d("NewsViewModel", "Inside fetchNewsByCategory")
+        logger.logDebug(_tag, "Inside fetchNewsByCategory")
         viewModelScope.launch {
             setupBeforeRequest()
             articlesUseCase
@@ -150,7 +151,7 @@ class NewsViewModelV2 @Inject constructor(
     }
 
     private suspend fun setupBeforeRequest() {
-        logger.d("NewsViewModel", "Inside setupBeforeRequest")
+        logger.logDebug(_tag, "Inside setupBeforeRequest")
         // Check for network availability
         if (!networkHelper.isNetworkConnected()) {
             _newsItem.emit(
@@ -179,7 +180,7 @@ class NewsViewModelV2 @Inject constructor(
             }
             .collect {
                 _newsItem.emit(UIState.Success(it))
-                logger.d("NewsViewModel", "Success")
+                logger.logDebug(_tag, "Success")
             }
     }
 }

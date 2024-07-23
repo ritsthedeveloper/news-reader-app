@@ -45,7 +45,7 @@ fun NewsScreen(
     newsViewModel: NewsViewModelV2 = hiltViewModel(),
     newsClicked: (Article) -> Unit
 ) {
-    newsViewModel.logger.d("NewsScreen", "Inside NewsScreen")
+    newsViewModel.logger.logDebug("NewsScreen", "Inside NewsScreen")
 
     val newsUiState: UIState<List<Article>> by newsViewModel.newsItem.collectAsStateWithLifecycle()
 
@@ -125,7 +125,7 @@ fun NewsScreenPaging(
     newsViewModel: NewsViewModelV2 = hiltViewModel(),
     newsClicked: (Article) -> Unit
 ) {
-    newsViewModel.logger.d("NewsScreen", "Inside NewsScreenPaging")
+    newsViewModel.logger.logDebug("NewsScreen", "Inside NewsScreenPaging")
     // This extension helps in collecting values from this Flow of PagingData and represents them inside a
     // LazyPagingItems instance.
     val pagingResponse = newsViewModel.newsItemPaging.collectAsLazyPagingItems()

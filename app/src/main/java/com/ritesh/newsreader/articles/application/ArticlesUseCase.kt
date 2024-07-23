@@ -16,12 +16,12 @@ class ArticlesUseCase @Inject constructor(
     private var pageNum = AppConstants.DEFAULT_PAGE_NUM
 
     suspend fun getNews(page: Int = AppConstants.DEFAULT_PAGE_NUM): List<Article> {
-        logger.d("NewsViewModel", "Inside ArticleUseCase - getNews")
+        logger.logDebug("NewsViewModel", "Inside ArticleUseCase - getNews")
         return newsRepository.getNews(page)
     }
 
     fun getNewsByCountry(countryId: String?): Flow<List<Article>> = flow {
-        logger.d("NewsViewModel", "Inside ArticleUseCase - fetchNewsByCountry")
+        logger.logDebug("NewsViewModel", "Inside ArticleUseCase - fetchNewsByCountry")
         emit(
             newsRepository.getNewsByCountryV2(
                 countryId ?: AppConstants.DEFAULT_COUNTRY,
@@ -31,7 +31,7 @@ class ArticlesUseCase @Inject constructor(
     }
 
     fun getNewsByLanguage(languageId: String?): Flow<List<Article>> = flow {
-        logger.d("NewsViewModel", "Inside ArticleUseCase - getNewsByLanguage")
+        logger.logDebug("NewsViewModel", "Inside ArticleUseCase - getNewsByLanguage")
         emit(
             newsRepository.getNewsByLanguageV2(
                 languageId ?: AppConstants.DEFAULT_LANGUAGE,
@@ -41,7 +41,7 @@ class ArticlesUseCase @Inject constructor(
     }
 
     fun getNewsBySource(sourceId: String?): Flow<List<Article>> = flow {
-        logger.d("NewsViewModel", "Inside ArticleUseCase - getNewsBySource")
+        logger.logDebug("NewsViewModel", "Inside ArticleUseCase - getNewsBySource")
         emit(
             newsRepository.getNewsBySourceV2(
                 sourceId ?: AppConstants.DEFAULT_SOURCE,
@@ -51,7 +51,7 @@ class ArticlesUseCase @Inject constructor(
     }
 
     fun getNewsByCategory(categoryId: String?): Flow<List<Article>> = flow {
-        logger.d("NewsViewModel", "Inside ArticleUseCase - fetchNewsByCategory")
+        logger.logDebug("NewsViewModel", "Inside ArticleUseCase - fetchNewsByCategory")
         emit(
             newsRepository.getNewsByCategoryV2(
                 categoryId ?: AppConstants.DEFAULT_CATEGORY,
