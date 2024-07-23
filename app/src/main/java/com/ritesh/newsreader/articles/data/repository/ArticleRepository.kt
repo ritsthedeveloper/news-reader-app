@@ -17,14 +17,16 @@ import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 class ArticleRepository @Inject constructor(
+    // Local Data Source
     private val database: DatabaseService,
+    // Remote Data Source
     private val network: ApiInterface
 ) {
-
     suspend fun getNews(pageNumber: Int = DEFAULT_PAGE_NUM): List<Article> {
         val articles = network.getNews(
             pageNum = pageNumber
         ).articles.apiArticleListToArticleList()
+
         return if (pageNumber == DEFAULT_PAGE_NUM) {
             database.deleteAllAndInsertAll(articles)
             database.getAllArticles().first()
@@ -114,6 +116,7 @@ class ArticleRepository @Inject constructor(
             network.getSources().sources.apiSourceListToSourceList()
         )
     }
+
     suspend fun getCountries(): Flow<List<Country>> = flow {
         emit(AppConstants.countryList)
     }

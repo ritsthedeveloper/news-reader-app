@@ -32,6 +32,7 @@ import com.ritesh.newsreader.common.ui.base.ShowLoading
 import com.ritesh.newsreader.common.ui.base.UIState
 import com.ritesh.newsreader.articles.presentation.components.NewsArticleItem
 import com.ritesh.newsreader.articles.presentation.components.NewsLayout
+import com.ritesh.newsreader.articles.presentation.viewmodel.NewsViewModelV2
 import com.ritesh.newsreader.util.filterArticles
 
 /**
@@ -40,7 +41,8 @@ import com.ritesh.newsreader.util.filterArticles
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun NewsScreen(
-    newsViewModel: NewsViewModel = hiltViewModel(),
+//    newsViewModel: NewsViewModel = hiltViewModel(),
+    newsViewModel: NewsViewModelV2 = hiltViewModel(),
     newsClicked: (Article) -> Unit
 ) {
     newsViewModel.logger.d("NewsScreen", "Inside NewsScreen")
@@ -119,7 +121,8 @@ fun NewsScreen(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun NewsScreenPaging(
-    newsViewModel: NewsViewModel = hiltViewModel(),
+//        newsViewModel: NewsViewModel = hiltViewModel(),
+    newsViewModel: NewsViewModelV2 = hiltViewModel(),
     newsClicked: (Article) -> Unit
 ) {
     newsViewModel.logger.d("NewsScreen", "Inside NewsScreenPaging")

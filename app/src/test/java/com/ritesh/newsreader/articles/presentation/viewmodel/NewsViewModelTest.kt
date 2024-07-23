@@ -40,6 +40,7 @@ class NewsViewModelTest {
     private lateinit var dispatcherProvider: DispatcherProvider
     private lateinit var networkHelper: NetworkHelper
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Before
     fun setUp() {
         logger = TestLogger()
