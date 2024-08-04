@@ -9,7 +9,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performScrollToNode
 import com.ritesh.newsreader.articles.data.repository.database.entity.Article
 import com.ritesh.newsreader.articles.data.repository.database.entity.Source
-import com.ritesh.newsreader.common.ui.components.NewsLayout
+import com.ritesh.newsreader.articles.presentation.components.NewsLayout
 import org.junit.Rule
 import org.junit.Test
 

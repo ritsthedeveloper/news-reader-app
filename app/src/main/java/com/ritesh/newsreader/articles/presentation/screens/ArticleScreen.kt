@@ -18,6 +18,9 @@ import com.ritesh.newsreader.articles.presentation.viewmodel.SharedViewModel
 import com.ritesh.newsreader.common.ui.base.ShowError
 import com.ritesh.newsreader.common.ui.base.WebViewPage
 
+/**
+ * Screen to display the Details of the selected Article.
+ */
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ArticleScreen(

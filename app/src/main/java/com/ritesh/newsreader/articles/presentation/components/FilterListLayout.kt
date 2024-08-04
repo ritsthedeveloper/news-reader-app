@@ -1,4 +1,4 @@
-package com.ritesh.newsreader.common.ui.components
+package com.ritesh.newsreader.articles.presentation.components
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items

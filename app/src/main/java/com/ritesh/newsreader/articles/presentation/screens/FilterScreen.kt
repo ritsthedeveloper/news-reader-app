@@ -18,11 +18,16 @@ import com.ritesh.newsreader.common.network.NoInternetException
 import com.ritesh.newsreader.common.ui.base.ShowError
 import com.ritesh.newsreader.common.ui.base.ShowLoading
 import com.ritesh.newsreader.common.ui.base.UIState
-import com.ritesh.newsreader.common.ui.components.CategoryListLayout
-import com.ritesh.newsreader.common.ui.components.CountryListLayout
-import com.ritesh.newsreader.common.ui.components.LanguageListLayout
-import com.ritesh.newsreader.common.ui.components.SourceListLayout
+import com.ritesh.newsreader.articles.presentation.components.CategoryListLayout
+import com.ritesh.newsreader.articles.presentation.components.CountryListLayout
+import com.ritesh.newsreader.articles.presentation.components.LanguageListLayout
+import com.ritesh.newsreader.articles.presentation.components.SourceListLayout
 
+/**
+ * Filter Screen displays all the Filtering options like Country, Category, Language and Source to the user,
+ * where user can select any filter from these options. Once selected the Filter data will be presented to the user.
+ * On landing on Filter Screen, by default country filter is selected and list of countries is presented to user.
+ */
 @Composable
 fun CountryScreen(
     countryFilterViewModel: CountryFilterViewModel = hiltViewModel(),

@@ -17,6 +17,7 @@ import com.ritesh.newsreader.common.dispatcher.DispatcherProvider
 import com.ritesh.newsreader.common.network.NetworkHelper
 import com.ritesh.newsreader.common.network.NetworkHelperImpl
 import com.ritesh.newsreader.common.ui.paging.NewsPagingSource
+import com.ritesh.newsreader.common.ui.paging.NewsPagingSourceV2
 import com.ritesh.newsreader.di.ApiKey
 import com.ritesh.newsreader.di.BaseUrl
 import com.ritesh.newsreader.di.DbName
@@ -87,7 +88,8 @@ class ApplicationModule {
     @Provides
     @Singleton
     fun providePager(
-        newsPagingSource: NewsPagingSource
+//        newsPagingSource: NewsPagingSource
+        newsPagingSource: NewsPagingSourceV2
     ): Pager<Int, Article> {
         /**
          * When you create a Pager instance to set up your reactive stream, we must provide

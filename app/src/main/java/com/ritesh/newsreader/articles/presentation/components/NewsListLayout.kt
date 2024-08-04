@@ -1,4 +1,4 @@
-package com.ritesh.newsreader.common.ui.components
+package com.ritesh.newsreader.articles.presentation.components
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -20,7 +20,7 @@ fun NewsLayout(
 ) {
     LazyColumn {
         items(newsList) {
-            Article(it) { article ->
+            NewsArticleItem(it) { article ->
                 articleClicked(article)
             }
         }
@@ -57,7 +57,7 @@ fun NewsLayoutWithDelete(
                 dismissContent = {
                     // Send back the selected Article on clicking the Bookmarked news-article for further processing
                     // like opening the detail screen etc.
-                    Article(article) {
+                    NewsArticleItem(article) {
                         articleClicked(it)
                     }
                 })

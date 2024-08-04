@@ -16,5 +16,6 @@ import javax.inject.Inject
 class NewsReaderApp : Application() {
     override fun onCreate() {
         super.onCreate()
+        AppLogger.init()
     }
 }

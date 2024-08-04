@@ -20,9 +20,12 @@ import com.ritesh.newsreader.common.network.NoInternetException
 import com.ritesh.newsreader.common.ui.base.ShowError
 import com.ritesh.newsreader.common.ui.base.ShowLoading
 import com.ritesh.newsreader.common.ui.base.UIState
-import com.ritesh.newsreader.common.ui.components.NewsLayout
+import com.ritesh.newsreader.articles.presentation.components.NewsLayout
 import com.ritesh.newsreader.util.filterArticles
 
+/**
+ * Screen provide UI to search the article by providing the info about article in the search bar provided.
+ */
 @Composable
 fun SearchScreen(
     searchViewModel: SearchViewModel = hiltViewModel(),

@@ -1,4 +1,4 @@
-package com.ritesh.newsreader.common.ui.components
+package com.ritesh.newsreader.articles.presentation.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,7 +23,7 @@ import coil.compose.AsyncImage
 import com.ritesh.newsreader.articles.data.repository.database.entity.Article
 
 @Composable
-fun Article(article: Article, onItemClick: (Article) -> Unit) {
+fun NewsArticleItem(article: Article, onItemClick: (Article) -> Unit) {
     Card(modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight()
